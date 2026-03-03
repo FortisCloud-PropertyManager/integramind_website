@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntegraMind Solutions – Intelligente Software für die Branchen von morgen</title>
+    <meta name="description" content="IntegraMind Solutions GmbH – Wir entwickeln KI-gestützte Software für Branchen mit ungenutztem Digitalisierungspotenzial. Unser erstes Produkt: ImmoMind.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #a855f7;
+            --cyan: #06b6d4;
+            --dark-bg: #0b0b12;
+            --dark-surface: #12121c;
+            --dark-card: #1a1a28;
+            --dark-border: rgba(255,255,255,0.06);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --gradient-brand: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+            --gradient-glow: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08));
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--dark-bg);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ─── UTILITY ─── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .gradient-text {
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-label {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--cyan);
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        /* ─── NAVIGATION ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            background: rgba(11, 11, 18, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--dark-border);
+            transition: all 0.3s ease;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .nav-logo-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gradient-brand) !important;
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 5rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        /* Neural Network animated background */
+        .hero-bg canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.25;
+        }
+
+        .hero-radial {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-radial-1 {
+            background: var(--primary);
+            top: -200px;
+            right: -200px;
+        }
+
+        .hero-radial-2 {
+            background: var(--accent);
+            bottom: -300px;
+            left: -200px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 30px); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: #a5b4fc;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s ease 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 560px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.8s ease 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: var(--gradient-brand);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--dark-border);
+            animation: fadeUp 0.8s ease 0.4s both;
+        }
+
+        .hero-stat-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .hero-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ─── ABOUT / MISSION ─── */
+        #mission {
+            background: var(--dark-surface);
+            border-top: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .mission-visual {
+            position: relative;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+        }
+
+        .mission-visual-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mission-diagram {
+            width: 280px;
+            height: 280px;
+            position: relative;
+        }
+
+        .mission-ring {
+            position: absolute;
+            border: 1.5px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            animation: spin 30s linear infinite;
+        }
+
+        .mission-ring:nth-child(1) {
+            inset: 0;
+        }
+
+        .mission-ring:nth-child(2) {
+            inset: 30px;
+            animation-direction: reverse;
+            animation-duration: 25s;
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .mission-ring:nth-child(3) {
+            inset: 60px;
+            animation-duration: 20s;
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .mission-center-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mission-center-icon svg {
+            width: 56px;
+            height: 56px;
+            color: var(--primary);
+        }
+
+        .ring-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .mission-text .section-desc {
+            margin-bottom: 2rem;
+        }
+
+        .mission-points {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mission-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(99, 102, 241, 0.04);
+            border: 1px solid rgba(99, 102, 241, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .mission-point:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.06);
+        }
+
+        .mission-point-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: var(--cyan);
+        }
+
+        .mission-point-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .mission-point-text strong {
+            color: var(--text-primary);
+        }
+
+        /* ─── SERVICES ─── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .service-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-brand);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-glow);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            color: var(--primary);
+        }
+
+        .service-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .service-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ─── IMMOMIND PRODUCT ─── */
+        #immomind {
+            background: var(--dark-surface);
+            border-top: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--dark-border);
+            overflow: hidden;
+        }
+
+        .immomind-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .immomind-content .section-title {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+        }
+
+        .immomind-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            color: var(--cyan);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .immomind-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .immo-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.75rem 1rem;
+            background: rgba(99, 102, 241, 0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.06);
+        }
+
+        .immo-feature-check {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: #22c55e;
+            margin-top: 1px;
+        }
+
+        .immo-feature span {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .immomind-visual {
+            position: relative;
+        }
+
+        .immo-mockup {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .immo-mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--dark-border);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .immo-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .immo-dot:nth-child(1) { background: #ef4444; }
+        .immo-dot:nth-child(2) { background: #eab308; }
+        .immo-dot:nth-child(3) { background: #22c55e; }
+
+        .immo-mockup-body {
+            padding: 1.5rem;
+            min-height: 320px;
+        }
+
+        .immo-dashboard-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .immo-stat-card {
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .immo-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .immo-stat-value {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        .immo-stat-value.green { color: #22c55e; }
+        .immo-stat-value.blue { color: var(--primary); }
+        .immo-stat-value.cyan { color: var(--cyan); }
+
+        .immo-chart-placeholder {
+            background: rgba(99, 102, 241, 0.04);
+            border: 1px solid rgba(99, 102, 241, 0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            height: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .immo-chart-title {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .immo-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            height: 80px;
+            padding-top: 0.5rem;
+        }
+
+        .immo-bar {
+            flex: 1;
+            background: var(--gradient-brand);
+            border-radius: 3px 3px 0 0;
+            opacity: 0.7;
+            animation: barGrow 1.5s ease both;
+        }
+
+        @keyframes barGrow {
+            from { height: 0 !important; }
+        }
+
+        .immo-table-placeholder {
+            margin-top: 0.75rem;
+        }
+
+        .immo-table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--dark-border);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .immo-table-row:last-child {
+            border: none;
+        }
+
+        .immo-table-status {
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-active { background: rgba(34,197,94,0.15); color: #22c55e; }
+        .status-pending { background: rgba(234,179,8,0.15); color: #eab308; }
+
+        .immo-mockup-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            filter: blur(100px);
+            opacity: 0.08;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* ─── PROCESS / WHY US ─── */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 60px;
+            right: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), rgba(139,92,246,0.3), transparent);
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step-num {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.25rem;
+            background: var(--dark-card);
+            border: 1.5px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .process-step:hover .process-step-num {
+            border-color: var(--primary);
+            box-shadow: 0 0 24px rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .process-step h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-step p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ─── CTA / CONTACT ─── */
+        #kontakt {
+            position: relative;
+        }
+
+        .cta-container {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.06;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .cta-container .section-label {
+            justify-content: center;
+        }
+
+        .cta-container .section-label::before {
+            display: none;
+        }
+
+        .cta-container .section-title {
+            max-width: 600px;
+            margin: 0 auto 1rem;
+        }
+
+        .cta-container .section-desc {
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        /* ─── CONTACT FORM ─── */
+        .contact-form {
+            max-width: 560px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.06);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .form-hint {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        .form-hint svg {
+            width: 13px;
+            height: 13px;
+            display: inline-block;
+            vertical-align: -2px;
+            margin-right: 0.25rem;
+            color: #22c55e;
+        }
+
+        /* Success State */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .form-success.show {
+            display: block;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .form-success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1.5px solid rgba(34, 197, 94, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+        }
+
+        .form-success-icon svg {
+            width: 28px;
+            height: 28px;
+            color: #22c55e;
+        }
+
+        .form-success h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-success p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 3rem 0 2rem;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-brand {
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 16px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .mission-grid,
+            .immomind-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4.5rem 0;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(11, 11, 18, 0.98);
+                border-bottom: 1px solid var(--dark-border);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .immomind-features {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .cta-container {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-visual {
+                height: 300px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav>
+    <div class="container">
+        <a href="#" class="nav-logo">
+            <!-- Inline Neural Network Icon -->
+            <svg class="nav-logo-icon" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="navGrad" x1="0" y1="0" x2="512" y2="512">
+                        <stop offset="0%" stop-color="#6366f1"/>
+                        <stop offset="100%" stop-color="#a855f7"/>
+                    </linearGradient>
+                </defs>
+                <rect width="512" height="512" rx="110" fill="#1e1b4b"/>
+                <circle cx="256" cy="160" r="28" fill="url(#navGrad)"/>
+                <circle cx="160" cy="280" r="24" fill="url(#navGrad)" opacity="0.85"/>
+                <circle cx="352" cy="280" r="24" fill="url(#navGrad)" opacity="0.85"/>
+                <circle cx="200" cy="380" r="20" fill="url(#navGrad)" opacity="0.7"/>
+                <circle cx="312" cy="380" r="20" fill="url(#navGrad)" opacity="0.7"/>
+                <line x1="256" y1="160" x2="160" y2="280" stroke="url(#navGrad)" stroke-width="3" opacity="0.5"/>
+                <line x1="256" y1="160" x2="352" y2="280" stroke="url(#navGrad)" stroke-width="3" opacity="0.5"/>
+                <line x1="160" y1="280" x2="200" y2="380" stroke="url(#navGrad)" stroke-width="3" opacity="0.4"/>
+                <line x1="160" y1="280" x2="312" y2="380" stroke="url(#navGrad)" stroke-width="3" opacity="0.3"/>
+                <line x1="352" y1="280" x2="312" y2="380" stroke="url(#navGrad)" stroke-width="3" opacity="0.4"/>
+                <line x1="352" y1="280" x2="200" y2="380" stroke="url(#navGrad)" stroke-width="3" opacity="0.3"/>
+            </svg>
+            <span class="nav-logo-text">Integra<span>Mind</span></span>
+        </a>
+
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')" aria-label="Menü">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <ul class="nav-links">
+            <li><a href="#mission">Mission</a></li>
+            <li><a href="#leistungen">Leistungen</a></li>
+            <li><a href="#immomind">ImmoMind</a></li>
+            <li><a href="#prozess">Prozess</a></li>
+            <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+    <div class="hero-bg">
+        <canvas id="neuralCanvas"></canvas>
+        <div class="hero-radial hero-radial-1"></div>
+        <div class="hero-radial hero-radial-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Jetzt in Entwicklung — ImmoMind
+            </div>
+
+            <h1>Intelligente Software<br>für <span class="gradient-text">vergessene Branchen</span></h1>
+
+            <p>Wir bringen KI-gestützte Softwarelösungen dorthin, wo sie am meisten gebraucht werden — in Branchen, die von der Digitalisierung bisher übersehen wurden.</p>
+
+            <div class="hero-actions">
+                <a href="https://immomind.io" target="_blank" rel="noopener" class="btn-primary">
+                    ImmoMind entdecken
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                </a>
+                <a href="#kontakt" class="btn-secondary">Gespräch vereinbaren</a>
+            </div>
+
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-value gradient-text">AI-First</div>
+                    <div class="hero-stat-label">Entwicklungsansatz</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value gradient-text">Made in DE</div>
+                    <div class="hero-stat-label">Entwickelt in Deutschland</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value gradient-text">DSGVO</div>
+                    <div class="hero-stat-label">Konform & sicher</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── MISSION ─── -->
+<section id="mission">
+    <div class="container">
+        <div class="mission-grid">
+            <div class="mission-visual reveal">
+                <div class="mission-visual-inner">
+                    <div class="mission-diagram">
+                        <div class="mission-ring">
+                            <div class="ring-node" style="top: 0; left: 50%; transform: translate(-50%, -50%);"></div>
+                        </div>
+                        <div class="mission-ring">
+                            <div class="ring-node" style="bottom: 10px; right: 10px;"></div>
+                        </div>
+                        <div class="mission-ring">
+                            <div class="ring-node" style="top: 50%; left: 0; transform: translate(-50%, -50%);"></div>
+                        </div>
+                        <div class="mission-center-icon">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-text">
+                <div class="section-label reveal">Unsere Mission</div>
+                <h2 class="section-title reveal reveal-delay-1">Wo andere wegsehen,<br>sehen wir <span class="gradient-text">Potenzial</span></h2>
+                <p class="section-desc reveal reveal-delay-2">Viele Branchen arbeiten noch mit veralteten Tools, Excel-Tabellen oder komplett analog. IntegraMind Solutions entwickelt intelligente Software, die genau dort ansetzt — und ganze Industrien nach vorne bringt.</p>
+
+                <div class="mission-points reveal reveal-delay-3">
+                    <div class="mission-point">
+                        <svg class="mission-point-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z"/></svg>
+                        <span class="mission-point-text"><strong>KI als Kern</strong> — Unsere Produkte werden von Anfang an mit künstlicher Intelligenz konzipiert, nicht nachgerüstet.</span>
+                    </div>
+                    <div class="mission-point">
+                        <svg class="mission-point-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5"/></svg>
+                        <span class="mission-point-text"><strong>Branchen-Expertise</strong> — Wir verstehen die Prozesse und Schmerzpunkte der Industrien, für die wir entwickeln.</span>
+                    </div>
+                    <div class="mission-point">
+                        <svg class="mission-point-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                        <span class="mission-point-text"><strong>Deutsche Qualität</strong> — DSGVO-konform, datensicher und nach höchsten Qualitätsstandards entwickelt.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="leistungen">
+    <div class="container">
+        <div class="section-label reveal">Was wir tun</div>
+        <h2 class="section-title reveal reveal-delay-1">Software, die <span class="gradient-text">Branchen transformiert</span></h2>
+        <p class="section-desc reveal reveal-delay-2">Unser Fokus liegt auf der Entwicklung von Softwareprodukten für Märkte, in denen die IT-Infrastruktur noch weit hinter den Möglichkeiten zurückbleibt.</p>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"/></svg>
+                </div>
+                <h3>Softwareentwicklung</h3>
+                <p>Wir konzipieren und entwickeln maßgeschneiderte Softwareprodukte — von der ersten Idee bis zur fertigen Plattform. Skalierbar, modern und auf reale Probleme zugeschnitten.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-1">
+                <div class="service-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z"/></svg>
+                </div>
+                <h3>KI & Automatisierung</h3>
+                <p>Intelligente Automatisierung, die versteht statt nur ausführt. Wir integrieren KI-Technologie dort, wo sie echten Mehrwert schafft — bei der Datenanalyse, Prognose und Entscheidungsunterstützung.</p>
+            </div>
+
+            <div class="service-card reveal reveal-delay-2">
+                <div class="service-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21"/></svg>
+                </div>
+                <h3>Branchenlösungen</h3>
+                <p>Spezialisierte Software für Branchen, die der Digitalisierung hinterherhinken — angefangen bei der Immobilienverwaltung. Weitere Märkte folgen.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── IMMOMIND ─── -->
+<section id="immomind">
+    <div class="container">
+        <div class="immomind-grid">
+            <div class="immomind-content">
+                <div class="immomind-tag reveal">
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3.75 13.5 10.5 6.75 14.25 10.5l5.25-6"/></svg>
+                    In Entwicklung
+                </div>
+                <div class="section-label reveal">Unser erstes Produkt</div>
+                <h2 class="section-title reveal reveal-delay-1">
+                    <span class="gradient-text">ImmoMind</span> — Immobilienverwaltung, neu gedacht
+                </h2>
+                <p class="section-desc reveal reveal-delay-2">ImmoMind wird die Art und Weise verändern, wie Immobilien verwaltet werden. KI-gestützt, intuitiv und speziell für den deutschen Markt entwickelt — von Mieterkommunikation bis Nebenkostenabrechnung.</p>
+
+                <div class="immomind-features reveal reveal-delay-3">
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>Objekt- & Mieterverwaltung</span>
+                    </div>
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>KI-gestützte Analyse</span>
+                    </div>
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>Automatisierte Abrechnungen</span>
+                    </div>
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>Dokumentenmanagement</span>
+                    </div>
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>Mieterkommunikation</span>
+                    </div>
+                    <div class="immo-feature">
+                        <svg class="immo-feature-check" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                        <span>DSGVO-konform</span>
+                    </div>
+                </div>
+
+                <a href="https://immomind.io" target="_blank" rel="noopener" class="btn-primary reveal reveal-delay-3" style="margin-top: 2rem; display: inline-flex; align-self: flex-start;">
+                    immomind.io besuchen
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                </a>
+            </div>
+
+            <div class="immomind-visual reveal">
+                <div class="immo-mockup">
+                    <div class="immo-mockup-header">
+                        <div class="immo-dot"></div>
+                        <div class="immo-dot"></div>
+                        <div class="immo-dot"></div>
+                        <span style="margin-left: 0.75rem; font-size: 0.75rem; color: var(--text-muted);">ImmoMind Dashboard</span>
+                    </div>
+                    <div class="immo-mockup-body">
+                        <div class="immo-dashboard-row">
+                            <div class="immo-stat-card">
+                                <div class="immo-stat-label">Objekte</div>
+                                <div class="immo-stat-value blue">24</div>
+                            </div>
+                            <div class="immo-stat-card">
+                                <div class="immo-stat-label">Einnahmen/Mo.</div>
+                                <div class="immo-stat-value green">€ 48.2k</div>
+                            </div>
+                            <div class="immo-stat-card">
+                                <div class="immo-stat-label">Auslastung</div>
+                                <div class="immo-stat-value cyan">96.8%</div>
+                            </div>
+                        </div>
+
+                        <div class="immo-chart-placeholder">
+                            <div class="immo-chart-title">Mieteinnahmen — Letzte 12 Monate</div>
+                            <div class="immo-bars">
+                                <div class="immo-bar" style="height: 45%;"></div>
+                                <div class="immo-bar" style="height: 52%;"></div>
+                                <div class="immo-bar" style="height: 48%;"></div>
+                                <div class="immo-bar" style="height: 60%;"></div>
+                                <div class="immo-bar" style="height: 55%;"></div>
+                                <div class="immo-bar" style="height: 68%;"></div>
+                                <div class="immo-bar" style="height: 72%;"></div>
+                                <div class="immo-bar" style="height: 65%;"></div>
+                                <div class="immo-bar" style="height: 78%;"></div>
+                                <div class="immo-bar" style="height: 82%;"></div>
+                                <div class="immo-bar" style="height: 88%;"></div>
+                                <div class="immo-bar" style="height: 95%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="immo-table-placeholder">
+                            <div class="immo-table-row">
+                                <span>Parkstraße 12, Frankfurt</span>
+                                <span class="immo-table-status status-active">Vermietet</span>
+                            </div>
+                            <div class="immo-table-row">
+                                <span>Lindenallee 8, Offenbach</span>
+                                <span class="immo-table-status status-active">Vermietet</span>
+                            </div>
+                            <div class="immo-table-row">
+                                <span>Bergweg 3, Hanau</span>
+                                <span class="immo-table-status status-pending">Inseriert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="immo-mockup-glow"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="prozess">
+    <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <div class="section-label reveal" style="justify-content: center;">
+                <span style="display: none;"></span>Unser Ansatz
+            </div>
+            <h2 class="section-title reveal reveal-delay-1">Vom Problem zur <span class="gradient-text">Lösung</span></h2>
+            <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">Wir entwickeln nicht nur Software — wir verstehen zuerst die Branche, ihre Herausforderungen und die Menschen, die damit arbeiten.</p>
+        </div>
+
+        <div class="process-steps">
+            <div class="process-step reveal">
+                <div class="process-step-num">01</div>
+                <h4>Analyse</h4>
+                <p>Tiefes Eintauchen in die Branche und deren Schmerzpunkte</p>
+            </div>
+            <div class="process-step reveal reveal-delay-1">
+                <div class="process-step-num">02</div>
+                <h4>Konzept</h4>
+                <p>Lösungsarchitektur mit KI-Kern und modernem UX-Design</p>
+            </div>
+            <div class="process-step reveal reveal-delay-2">
+                <div class="process-step-num">03</div>
+                <h4>Entwicklung</h4>
+                <p>Agile Entwicklung mit kontinuierlichem Nutzerfeedback</p>
+            </div>
+            <div class="process-step reveal reveal-delay-3">
+                <div class="process-step-num">04</div>
+                <h4>Launch</h4>
+                <p>Markteinführung, Skalierung und kontinuierliche Verbesserung</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA / CONTACT ─── -->
+<section id="kontakt">
+    <div class="container">
+        <div class="cta-container reveal">
+            <div class="cta-glow"></div>
+            <div class="section-label">Lassen Sie uns sprechen</div>
+            <h2 class="section-title">Bereit, Ihre Branche<br><span class="gradient-text">neu zu definieren?</span></h2>
+            <p class="section-desc">Ob als zukünftiger Nutzer von ImmoMind oder mit einer Idee für eine andere Branche — wir freuen uns auf den Austausch.</p>
+
+            <div class="contact-form" id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vorname">Vorname</label>
+                        <input type="text" id="vorname" name="vorname" placeholder="Max" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nachname">Nachname</label>
+                        <input type="text" id="nachname" name="nachname" placeholder="Mustermann" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" placeholder="max@unternehmen.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unternehmen">Unternehmen</label>
+                        <input type="text" id="unternehmen" name="unternehmen" placeholder="Firma GmbH">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="nachricht">Nachricht</label>
+                    <textarea id="nachricht" name="nachricht" placeholder="Erzählen Sie uns von Ihrem Vorhaben..." required></textarea>
+                </div>
+                <button type="button" class="btn-primary form-submit" onclick="submitForm()">
+                    Nachricht senden
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+                </button>
+                <div class="form-hint">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                    Ihre Daten werden DSGVO-konform verarbeitet.
+                </div>
+            </div>
+
+            <div class="form-success" id="formSuccess">
+                <div class="form-success-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m4.5 12.75 6 6 9-13.5"/></svg>
+                </div>
+                <h3>Vielen Dank!</h3>
+                <p>Ihre Nachricht ist bei uns eingegangen. Wir melden uns in Kürze.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-brand">IntegraMind Solutions GmbH</span>
+                <div class="footer-divider"></div>
+                <span class="footer-copy">© 2025. Alle Rechte vorbehalten.</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Impressum</a>
+                <a href="#">Datenschutz</a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ─── SCRIPTS ─── -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Neural Network Canvas Animation
+const canvas = document.getElementById('neuralCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Node {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.r = Math.random() * 2 + 1;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+}
+
+const nodes = Array.from({ length: 60 }, () => new Node());
+
+function drawNetwork() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = `rgba(99, 102, 241, ${(1 - dist / 200) * 0.3})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+        }
+    }
+
+    nodes.forEach(node => {
+        node.update();
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.5)';
+        ctx.fill();
+    });
+
+    requestAnimationFrame(drawNetwork);
+}
+drawNetwork();
+
+// Scroll Reveal
+const revealElements = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => observer.observe(el));
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+        nav.style.padding = '0.6rem 0';
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    } else {
+        nav.style.padding = '1rem 0';
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.04)';
+    }
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.querySelector('.nav-links').classList.remove('active');
+        }
+    });
+});
+
+// Contact Form
+function submitForm() {
+    const fields = ['vorname', 'nachname', 'email', 'nachricht'];
+    let valid = true;
+
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+            el.style.borderColor = '#ef4444';
+            el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+            valid = false;
+        } else {
+            el.style.borderColor = '';
+            el.style.boxShadow = '';
+        }
+    });
+
+    const emailEl = document.getElementById('email');
+    if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        emailEl.style.borderColor = '#ef4444';
+        emailEl.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Wird gesendet...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    setTimeout(() => {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+    }, 1200);
+}
+
+// Reset validation on input
+document.querySelectorAll('#contactForm input, #contactForm textarea').forEach(el => {
+    el.addEventListener('input', function() {
+        this.style.borderColor = '';
+        this.style.boxShadow = '';
+    });
+});
+</script>
+
+</body>
+</html>
