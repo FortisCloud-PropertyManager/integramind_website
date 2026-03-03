@@ -9,63 +9,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type"        content="website">
+    <meta property="og:url"         content="https://integramindsolutions.de">
+    <meta property="og:title"       content="IntegraMind Solutions – Intelligente Software für die Branchen von morgen">
+    <meta property="og:description" content="Wir entwickeln KI-gestützte Software für Branchen mit ungenutztem Digitalisierungspotenzial. Unser erstes Produkt: ImmoMind.">
+    <meta property="og:image"       content="https://integramindsolutions.de/og-image.png">
+    <meta property="og:locale"      content="de_DE">
+    <meta name="twitter:card"       content="summary_large_image">
+
     <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #a855f7;
-            --cyan: #06b6d4;
-            --dark-bg: #0b0b12;
-            --dark-surface: #12121c;
-            --dark-card: #1a1a28;
-            --dark-border: rgba(255,255,255,0.06);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --gradient-brand: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-            --gradient-glow: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08));
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html {
-            scroll-behavior: smooth;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) var(--dark-bg);
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* ─── NOISE TEXTURE OVERLAY ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* ─── UTILITY ─── */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .gradient-text {
-            background: var(--gradient-brand);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .section-label {
             font-family: 'Sora', sans-serif;
             font-size: 0.7rem;
@@ -107,51 +62,7 @@
             position: relative;
         }
 
-        /* ─── NAVIGATION ─── */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-            background: rgba(11, 11, 18, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--dark-border);
-            transition: all 0.3s ease;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .nav-logo-icon {
-            width: 36px;
-            height: 36px;
-        }
-
-        .nav-logo-text {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-logo-text span {
-            color: var(--primary);
-        }
-
+        /* ─── NAVIGATION (index-specific) ─── */
         .nav-links {
             display: flex;
             gap: 2.5rem;
@@ -327,56 +238,6 @@
             gap: 1rem;
             flex-wrap: wrap;
             animation: fadeUp 0.8s ease 0.3s both;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.9rem 2rem;
-            background: var(--gradient-brand);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.25);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.35);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.9rem 2rem;
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.04);
         }
 
         .hero-stats {
@@ -1045,75 +906,6 @@
             font-size: 0.95rem;
         }
 
-        /* ─── FOOTER ─── */
-        footer {
-            padding: 3rem 0 2rem;
-            border-top: 1px solid var(--dark-border);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .footer-brand {
-            font-family: 'Sora', sans-serif;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .footer-divider {
-            width: 1px;
-            height: 16px;
-            background: rgba(255,255,255,0.15);
-        }
-
-        .footer-copy {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-links a {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* ─── SCROLL REVEAL ─── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-
         /* ─── RESPONSIVE ─── */
         @media (max-width: 1024px) {
             .mission-grid,
@@ -1194,11 +986,6 @@
 
             .mission-visual {
                 height: 300px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
             }
         }
     </style>
@@ -1588,12 +1375,12 @@
             <div class="footer-left">
                 <span class="footer-brand">IntegraMind Solutions GmbH</span>
                 <div class="footer-divider"></div>
-                <span class="footer-copy">© 2025. Alle Rechte vorbehalten.</span>
+                <span class="footer-copy">© 2026. Alle Rechte vorbehalten.</span>
             </div>
             <div class="footer-links">
-                <a href="#">Impressum</a>
-                <a href="#">Datenschutz</a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="impressum/impressum.html">Impressum</a>
+                <a href="datenschutz/datenschutz.html">Datenschutz</a>
+                <a href="https://www.linkedin.com/company/integramind-solutions-gmbh/posts/?feedView=all" target="_blank" rel="noopener">LinkedIn</a>
             </div>
         </div>
     </div>
@@ -1630,6 +1417,16 @@ class Node {
 
 const nodes = Array.from({ length: 60 }, () => new Node());
 
+let animationId = null;
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        cancelAnimationFrame(animationId);
+    } else {
+        drawNetwork();
+    }
+});
+
 function drawNetwork() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -1657,7 +1454,7 @@ function drawNetwork() {
         ctx.fill();
     });
 
-    requestAnimationFrame(drawNetwork);
+    animationId = requestAnimationFrame(drawNetwork);
 }
 drawNetwork();
 
