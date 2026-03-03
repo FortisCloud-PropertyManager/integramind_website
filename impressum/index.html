@@ -4,107 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impressum – IntegraMind Solutions GmbH</title>
-    <link rel="icon" type="image/svg+xml" href="integramind-favicon.svg">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
     <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #a855f7;
-            --cyan: #06b6d4;
-            --dark-bg: #0b0b12;
-            --dark-surface: #12121c;
-            --dark-card: #1a1a28;
-            --dark-border: rgba(255,255,255,0.06);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --gradient-brand: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .gradient-text {
-            background: var(--gradient-brand);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ─── NAV ─── */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 0;
-            background: rgba(11, 11, 18, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--dark-border);
-        }
-
-        nav .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .nav-logo-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-        }
-
-        .nav-logo-text {
-            font-family: 'Sora', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-logo-text span {
-            color: var(--primary);
-        }
-
+        /* ─── LEGAL PAGE ─── */
         .nav-back {
             display: inline-flex;
             align-items: center;
@@ -116,16 +23,10 @@
             transition: color 0.2s;
         }
 
-        .nav-back:hover {
-            color: var(--text-primary);
-        }
+        .nav-back:hover { color: var(--text-primary); }
 
-        .nav-back svg {
-            width: 16px;
-            height: 16px;
-        }
+        .nav-back svg { width: 16px; height: 16px; }
 
-        /* ─── CONTENT ─── */
         .page-header {
             padding: 8rem 0 3rem;
             border-bottom: 1px solid var(--dark-border);
@@ -145,13 +46,9 @@
             font-size: 0.95rem;
         }
 
-        .legal-content {
-            padding-bottom: 6rem;
-        }
+        .legal-content { padding-bottom: 6rem; }
 
-        .legal-section {
-            margin-bottom: 2.5rem;
-        }
+        .legal-section { margin-bottom: 2.5rem; }
 
         .legal-section h2 {
             font-family: 'Sora', sans-serif;
@@ -178,9 +75,7 @@
             transition: color 0.2s;
         }
 
-        .legal-section a:hover {
-            color: var(--accent);
-        }
+        .legal-section a:hover { color: var(--accent); }
 
         .legal-placeholder {
             display: inline-flex;
@@ -195,80 +90,14 @@
             font-weight: 600;
         }
 
-        .legal-placeholder svg {
-            width: 13px;
-            height: 13px;
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            padding: 2rem 0;
-            border-top: 1px solid var(--dark-border);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .footer-brand {
-            font-family: 'Sora', sans-serif;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .footer-divider {
-            width: 1px;
-            height: 16px;
-            background: rgba(255,255,255,0.15);
-        }
-
-        .footer-copy {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-links a {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
+        .legal-placeholder svg { width: 13px; height: 13px; }
     </style>
 </head>
 <body>
 
 <!-- ─── NAV ─── -->
 <nav>
-    <div class="nav-container">
+    <div class="container">
         <a href="../index.html" class="nav-logo">
             <svg class="nav-logo-icon" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -300,7 +129,7 @@
 </nav>
 
 <!-- ─── PAGE HEADER ─── -->
-<div class="container">
+<div class="container-narrow">
     <div class="page-header">
         <h1><span class="gradient-text">Impressum</span></h1>
         <p>Angaben gemäß § 5 DDG</p>
@@ -378,16 +207,18 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-    <div class="footer-content">
-        <div class="footer-left">
-            <span class="footer-brand">IntegraMind Solutions GmbH</span>
-            <div class="footer-divider"></div>
-            <span class="footer-copy">© 2025. Alle Rechte vorbehalten.</span>
-        </div>
-        <div class="footer-links">
-            <a href="impressum.html">Impressum</a>
-            <a href="datenschutz.html">Datenschutz</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="footer-brand">IntegraMind Solutions GmbH</span>
+                <div class="footer-divider"></div>
+                <span class="footer-copy">© 2026. Alle Rechte vorbehalten.</span>
+            </div>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="../datenschutz/datenschutz.html">Datenschutz</a>
+                <a href="https://www.linkedin.com/company/integramind-solutions-gmbh/posts/?feedView=all" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
         </div>
     </div>
 </footer>
