@@ -7,7 +7,7 @@
     <meta name="description" content="IntegraMind Solutions GmbH – Wir entwickeln KI-gestützte Software für Branchen mit ungenutztem Digitalisierungspotenzial. Unser erstes Produkt: ImmoMind.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1591,7 +1591,7 @@
                 <span class="footer-copy">© 2025. Alle Rechte vorbehalten.</span>
             </div>
             <div class="footer-links">
-                <a href="/impressum">Impressum</a>
+                <a href="#">Impressum</a>
                 <a href="#">Datenschutz</a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
             </div>
@@ -1728,10 +1728,33 @@ function submitForm() {
     btn.disabled = true;
     btn.style.opacity = '0.7';
 
-    setTimeout(() => {
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('formSuccess').classList.add('show');
-    }, 1200);
+    const data = {
+        vorname: document.getElementById('vorname').value.trim(),
+        nachname: document.getElementById('nachname').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        unternehmen: document.getElementById('unternehmen').value.trim(),
+        nachricht: document.getElementById('nachricht').value.trim(),
+    };
+
+    fetch('https://formspree.io/f/xqedrkga', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+    })
+    .then(res => {
+        if (res.ok) {
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('formSuccess').classList.add('show');
+        } else {
+            throw new Error();
+        }
+    })
+    .catch(() => {
+        btn.textContent = 'Nachricht senden';
+        btn.disabled = false;
+        btn.style.opacity = '';
+        alert('Es ist ein Fehler aufgetreten. Bitte versuche es erneut oder schreibe uns direkt an info@integramindsolutions.de');
+    });
 }
 
 // Reset validation on input
