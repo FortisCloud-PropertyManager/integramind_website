@@ -4,19 +4,19 @@
 
 /* ─── VARIABLES ─── */
 :root {
-    --primary: #6366f1;
-    --secondary: #8b5cf6;
-    --accent: #a855f7;
-    --cyan: #06b6d4;
-    --dark-bg: #0b0b12;
-    --dark-surface: #12121c;
-    --dark-card: #1a1a28;
-    --dark-border: rgba(255,255,255,0.06);
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --gradient-brand: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-    --gradient-glow: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08));
+    --primary: #0a84ff;
+    --secondary: #005b9a;
+    --accent: #38bfff;
+    --cyan: #0080c8;
+    --dark-bg: #f5f8ff;
+    --dark-surface: #eaf0ff;
+    --dark-card: #ffffff;
+    --dark-border: rgba(10, 80, 200, 0.12);
+    --text-primary: #0c1a2e;
+    --text-secondary: #334d6e;
+    --text-muted: #7a94b0;
+    --gradient-brand: linear-gradient(135deg, #005b9a, #0a84ff, #38bfff);
+    --gradient-glow: linear-gradient(135deg, rgba(10,132,255,0.06), rgba(0,91,154,0.03));
 }
 
 /* ─── RESET ─── */
@@ -76,7 +76,7 @@ nav {
     right: 0;
     z-index: 1000;
     padding: 1rem 0;
-    background: rgba(11, 11, 18, 0.8);
+    background: rgba(245, 248, 255, 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--dark-border);
@@ -145,7 +145,7 @@ nav .container {
     padding: 0.9rem 2rem;
     background: transparent;
     color: var(--text-primary);
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(10, 80, 200, 0.2);
     border-radius: 10px;
     font-size: 0.95rem;
     font-weight: 500;
@@ -156,8 +156,8 @@ nav .container {
 }
 
 .btn-secondary:hover {
-    border-color: rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.04);
+    border-color: rgba(10, 80, 200, 0.4);
+    background: rgba(10, 80, 200, 0.04);
 }
 
 /* ─── FOOTER ─── */
@@ -189,7 +189,7 @@ footer {
 .footer-divider {
     width: 1px;
     height: 16px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(10, 80, 200, 0.15);
 }
 
 .footer-copy {
